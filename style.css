@@ -1,65 +1,146 @@
+/* =========================
+   SVEN SYSTEM CONTROL ROOM
+   STYLE v1.0 STABLE
+========================= */
+
 body {
   margin: 0;
+  padding: 0;
   background: #05070d;
-  color: white;
-  font-family: Arial;
+  color: #d6e2ff;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
-#dashboard {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-}
+/* =========================
+   TOP BAR (BUTTONS)
+========================= */
 
 #topbar {
-  padding: 10px;
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  position: relative;
+  z-index: 10;
 }
 
 button {
-  margin-right: 5px;
-  background: #111;
-  color: white;
-  border: 1px solid #333;
-  padding: 8px;
+  background: #111827;
+  border: 1px solid #2a3d66;
+  color: #d6e2ff;
+  padding: 8px 12px;
   cursor: pointer;
+  border-radius: 6px;
+  transition: 0.2s;
 }
+
+button:hover {
+  background: #1f2a44;
+}
+
+/* =========================
+   STATE DISPLAY
+========================= */
+
+#state-display {
+  padding: 10px 12px;
+  font-size: 14px;
+  opacity: 0.8;
+  position: relative;
+  z-index: 10;
+}
+
+/* =========================
+   MAIN SCENE
+========================= */
 
 #scene {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 40px;
-  margin-top: 100px;
+  height: 60vh;
+  position: relative;
+  z-index: 5;
 }
 
-#sven, #chatty, #cup {
-  padding: 10px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 8px;
+/* SVEN + CHATTY + CUP */
+
+#sven,
+#chatty,
+#cup {
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
 }
+
+/* CUP (ANCHOR) */
+
+#cup {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* =========================
+   NETWORK LAYER
+========================= */
 
 #network {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(#3af 1px, transparent 1px);
-  background-size: 50px 50px;
-  opacity: 0.2;
   top: 0;
+  left: 0;
+  background-image: radial-gradient(#3aa 1px, transparent 1px);
+  background-size: 45px 45px;
+  opacity: 0.15;
+  z-index: 1;
 }
+
+/* =========================
+   COSMOS LAYER
+========================= */
 
 #cosmos {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, #0b1b2a, #05070d);
-  opacity: 0.4;
   top: 0;
+  left: 0;
+  background: radial-gradient(circle at center, #0b1b2a, #05070d);
+  opacity: 0.5;
+  z-index: 0;
 }
+
+/* =========================
+   AI OUTPUT PANEL
+========================= */
 
 #ai-output {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
   font-size: 12px;
   opacity: 0.8;
+  padding: 10px;
+  border: 1px solid #2a3d66;
+  background: rgba(10, 15, 30, 0.5);
+  border-radius: 8px;
+  z-index: 10;
+}
+
+/* =========================
+   SYSTEM FEEL POLISH
+========================= */
+
+* {
+  box-sizing: border-box;
 }
