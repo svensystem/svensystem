@@ -1,109 +1,113 @@
 /* =========================
    SVEN SYSTEM CONTROL ROOM
-   STYLE v1.0 (SYNCED BUILD)
+   VISUAL UPGRADE v2
 ========================= */
-
-/* -------------------------
-   GLOBAL BASE
-------------------------- */
 
 body {
   margin: 0;
   padding: 0;
-  background: #05070d;
+  background: radial-gradient(circle at center, #070b14, #02030a);
   color: #d6e2ff;
-  font-family: Arial, sans-serif;
+  font-family: "Arial", sans-serif;
   overflow: hidden;
 }
 
-/* -------------------------
-   TOP CONTROL BAR
-------------------------- */
+/* =========================
+   CONTROL ROOM HEADER
+========================= */
 
 #topbar {
   display: flex;
-  gap: 10px;
-  padding: 12px;
+  gap: 12px;
+  padding: 14px;
   position: relative;
-  z-index: 10;
+  z-index: 20;
+  background: rgba(10, 15, 30, 0.6);
+  border-bottom: 1px solid rgba(120, 160, 255, 0.2);
+  backdrop-filter: blur(10px);
 }
 
+/* BUTTONS */
 button {
-  background: #111827;
-  border: 1px solid #2a3d66;
+  background: linear-gradient(180deg, #1a2742, #0e1628);
+  border: 1px solid rgba(120, 160, 255, 0.25);
   color: #d6e2ff;
-  padding: 8px 12px;
+  padding: 10px 14px;
   cursor: pointer;
-  border-radius: 6px;
-  transition: 0.2s ease;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 button:hover {
-  background: #1f2a44;
+  background: #22365e;
+  transform: translateY(-1px);
 }
 
-/* -------------------------
+/* =========================
    STATE DISPLAY
-------------------------- */
+========================= */
 
 #state-display {
-  padding: 10px 12px;
+  padding: 10px 14px;
   font-size: 14px;
-  opacity: 0.85;
+  opacity: 0.9;
   position: relative;
-  z-index: 10;
+  z-index: 20;
+  color: #8fb3ff;
 }
 
-/* -------------------------
-   MAIN SCENE LAYOUT
-------------------------- */
+/* =========================
+   MAIN SCENE (CENTER GRID)
+========================= */
 
 #scene {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60vh;
-  gap: 60px;
+  height: 65vh;
+  gap: 80px;
   position: relative;
-  z-index: 5;
+  z-index: 10;
 }
 
-/* -------------------------
-   ENTITY BLOCKS (SVEN / CHATTY)
-------------------------- */
+/* =========================
+   ENTITIES (SVEN / CHATTY)
+========================= */
 
 #sven,
 #chatty {
-  display: inline-block;
-  padding: 14px 18px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(120, 160, 255, 0.25);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
-  font-weight: 500;
+  padding: 18px 22px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(120, 160, 255, 0.3);
+  border-radius: 14px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 20px rgba(80, 120, 255, 0.08);
   transition: all 0.3s ease;
 }
 
-/* -------------------------
+/* =========================
    CUP (ANCHOR OBJECT)
-------------------------- */
+========================= */
 
 #cup {
   position: absolute;
-  bottom: 60px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(120, 160, 255, 0.2);
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(120, 160, 255, 0.25);
   border-radius: 10px;
   font-size: 13px;
-  opacity: 0.9;
+  opacity: 0.95;
+  z-index: 15;
 }
 
-/* -------------------------
-   NETWORK LAYER
-------------------------- */
+/* =========================
+   NETWORK FIELD (SCI-FI GRID)
+========================= */
 
 #network {
   position: absolute;
@@ -111,15 +115,19 @@ button:hover {
   height: 100%;
   top: 0;
   left: 0;
-  background-image: radial-gradient(#3aa 1px, transparent 1px);
-  background-size: 45px 45px;
-  opacity: 0.15;
-  z-index: 1;
+
+  background-image:
+    linear-gradient(rgba(80,120,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80,120,255,0.08) 1px, transparent 1px);
+
+  background-size: 50px 50px;
+  opacity: 0.25;
+  z-index: 2;
 }
 
-/* -------------------------
-   COSMOS BACKGROUND
-------------------------- */
+/* =========================
+   COSMOS LAYER
+========================= */
 
 #cosmos {
   position: absolute;
@@ -127,32 +135,36 @@ button:hover {
   height: 100%;
   top: 0;
   left: 0;
-  background: radial-gradient(circle at center, #0b1b2a, #05070d);
-  opacity: 0.5;
-  z-index: 0;
+  background: radial-gradient(circle at center, #0b1f35, #02030a);
+  opacity: 0.6;
+  z-index: 1;
 }
 
-/* -------------------------
+/* =========================
    AI OUTPUT PANEL
-------------------------- */
+========================= */
 
 #ai-output {
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+
+  padding: 14px;
   font-size: 12px;
-  opacity: 0.85;
-  padding: 10px;
-  border: 1px solid #2a3d66;
-  background: rgba(10, 15, 30, 0.6);
-  border-radius: 8px;
-  z-index: 10;
+
+  background: rgba(10, 15, 30, 0.65);
+  border: 1px solid rgba(120, 160, 255, 0.25);
+  border-radius: 10px;
+
+  color: #cfe0ff;
+  opacity: 0.9;
+  z-index: 20;
 }
 
-/* -------------------------
-   SAFETY / BOX MODEL FIX
-------------------------- */
+/* =========================
+   GLOBAL FIX
+========================= */
 
 * {
   box-sizing: border-box;
