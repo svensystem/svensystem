@@ -1,1 +1,42 @@
-<h1>Sven System Control Room</h1>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Sven System Control Room</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="dashboard">
+
+  <div id="topbar">
+    <button onclick="setState('OBSERVE')">OBSERVE</button>
+    <button onclick="setState('CONNECT')">CONNECT</button>
+    <button onclick="setState('STRUCTURE')">STRUCTURE</button>
+    <button onclick="setState('REFLECT')">REFLECT</button>
+  </div>
+
+  <div id="state">
+    STATE: <span id="state-display">OBSERVE</span>
+  </div>
+
+  <div id="scene">
+
+    <div id="cup">☕ Der frühe Vogel kann mich mal</div>
+    <div id="sven">SVEN</div>
+    <div id="chatty">CHATTY</div>
+
+  </div>
+
+  <div id="network"></div>
+  <div id="cosmos"></div>
+
+  <div id="ai-output"></div>
+
+</div>
+
+<script src="engine.js"></script>
+
+</body>
+</html>
