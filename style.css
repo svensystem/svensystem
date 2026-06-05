@@ -1,0 +1,65 @@
+body {
+  margin: 0;
+  background: #05070d;
+  color: white;
+  font-family: Arial;
+}
+
+#dashboard {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+#topbar {
+  padding: 10px;
+}
+
+button {
+  margin-right: 5px;
+  background: #111;
+  color: white;
+  border: 1px solid #333;
+  padding: 8px;
+  cursor: pointer;
+}
+
+#scene {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 100px;
+}
+
+#sven, #chatty, #cup {
+  padding: 10px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+}
+
+#network {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(#3af 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.2;
+  top: 0;
+}
+
+#cosmos {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #0b1b2a, #05070d);
+  opacity: 0.4;
+  top: 0;
+}
+
+#ai-output {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 12px;
+  opacity: 0.8;
+}
