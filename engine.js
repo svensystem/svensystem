@@ -1,47 +1,97 @@
+// =========================
+// SVEN SYSTEM ENGINE v1.0
+// =========================
+
 let STATE = "OBSERVE";
+
+// -------------------------
+// STATE CONTROL
+// -------------------------
 
 function setState(newState) {
   STATE = newState;
   render();
+  updateAI();
 }
 
-function render() {
+// -------------------------
+// RENDER ENGINE
+// -------------------------
 
+function render() {
   const stateDisplay = document.getElementById("state-display");
-  const network = document.getElementById("network");
+
   const sven = document.getElementById("sven");
   const chatty = document.getElementById("chatty");
-  const ai = document.getElementById("ai-output");
+  const network = document.getElementById("network");
 
-  stateDisplay.innerText = STATE;
+  if (!stateDisplay || !sven || !chatty || !network) return;
+
+  stateDisplay.innerText = "STATE: " + STATE;
 
   // RESET
-  network.style.opacity = 0.2;
-  sven.style.opacity = 1;
-  chatty.style.opacity = 1;
+  sven.style.opacity = "1";
+  chatty.style.opacity = "1";
+  chatty.style.transform = "translateY(0px)";
+  network.style.opacity = "0.2";
+
+  // -------------------------
+  // STATE LOGIC
+  // -------------------------
 
   if (STATE === "OBSERVE") {
-    chatty.style.opacity = 0.6;
-    network.style.opacity = 0.3;
-    ai.innerText = "System beobachtet…";
+    chatty.style.opacity = "0.6";
+    network.style.opacity = "0.3";
   }
 
   if (STATE === "CONNECT") {
-    network.style.opacity = 0.7;
     chatty.style.transform = "translateY(-10px)";
-    ai.innerText = "Verbindungen werden aktiviert…";
+    network.style.opacity = "0.7";
   }
 
   if (STATE === "STRUCTURE") {
-    network.style.opacity = 0.9;
-    ai.innerText = "Strukturen werden erkannt…";
+    network.style.opacity = "0.9";
   }
 
   if (STATE === "REFLECT") {
-    sven.style.opacity = 0.6;
-    network.style.opacity = 0.15;
-    ai.innerText = "System reflektiert Zustand…";
+    sven.style.opacity = "0.6";
+    network.style.opacity = "0.15";
   }
 }
 
+// -------------------------
+// AI FEEDBACK (SIMPLIFIED)
+// -------------------------
+
+function updateAI() {
+  const aiOutput = document.getElementById("ai-output");
+
+  if (!aiOutput) return;
+
+  let text = "";
+
+  if (STATE === "OBSERVE") {
+    text = "System beobachtet Umgebung. Sven ist im Wahrnehmungsmodus.";
+  }
+
+  if (STATE === "CONNECT") {
+    text = "Netzwerkaktivität steigt. Chatty reagiert auf Verbindungen.";
+  }
+
+  if (STATE === "STRUCTURE") {
+    text = "System ordnet Muster. Struktur wird stabilisiert.";
+  }
+
+  if (STATE === "REFLECT") {
+    text = "System reduziert Aktivität. Fokus auf innere Verarbeitung.";
+  }
+
+  aiOutput.innerText = text;
+}
+
+// -------------------------
+// INIT
+// -------------------------
+
 render();
+updateAI();
