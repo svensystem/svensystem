@@ -1,7 +1,11 @@
 /* =========================
    SVEN SYSTEM CONTROL ROOM
-   STYLE v1.0 STABLE
+   STYLE v1.0 (SYNCED BUILD)
 ========================= */
+
+/* -------------------------
+   GLOBAL BASE
+------------------------- */
 
 body {
   margin: 0;
@@ -12,9 +16,9 @@ body {
   overflow: hidden;
 }
 
-/* =========================
-   TOP BAR (BUTTONS)
-========================= */
+/* -------------------------
+   TOP CONTROL BAR
+------------------------- */
 
 #topbar {
   display: flex;
@@ -31,66 +35,75 @@ button {
   padding: 8px 12px;
   cursor: pointer;
   border-radius: 6px;
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 button:hover {
   background: #1f2a44;
 }
 
-/* =========================
+/* -------------------------
    STATE DISPLAY
-========================= */
+------------------------- */
 
 #state-display {
   padding: 10px 12px;
   font-size: 14px;
-  opacity: 0.8;
+  opacity: 0.85;
   position: relative;
   z-index: 10;
 }
 
-/* =========================
-   MAIN SCENE
-========================= */
+/* -------------------------
+   MAIN SCENE LAYOUT
+------------------------- */
 
 #scene {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;
   height: 60vh;
+  gap: 60px;
   position: relative;
   z-index: 5;
 }
 
-/* SVEN + CHATTY + CUP */
+/* -------------------------
+   ENTITY BLOCKS (SVEN / CHATTY)
+------------------------- */
 
 #sven,
-#chatty,
-#cup {
+#chatty {
+  display: inline-block;
   padding: 14px 18px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  backdrop-filter: blur(6px);
+  border: 1px solid rgba(120, 160, 255, 0.25);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  font-weight: 500;
   transition: all 0.3s ease;
 }
 
-/* CUP (ANCHOR) */
+/* -------------------------
+   CUP (ANCHOR OBJECT)
+------------------------- */
 
 #cup {
   position: absolute;
-  bottom: 30px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 14px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(120, 160, 255, 0.2);
+  border-radius: 10px;
+  font-size: 13px;
   opacity: 0.9;
 }
 
-/* =========================
+/* -------------------------
    NETWORK LAYER
-========================= */
+------------------------- */
 
 #network {
   position: absolute;
@@ -104,9 +117,9 @@ button:hover {
   z-index: 1;
 }
 
-/* =========================
-   COSMOS LAYER
-========================= */
+/* -------------------------
+   COSMOS BACKGROUND
+------------------------- */
 
 #cosmos {
   position: absolute;
@@ -119,9 +132,9 @@ button:hover {
   z-index: 0;
 }
 
-/* =========================
+/* -------------------------
    AI OUTPUT PANEL
-========================= */
+------------------------- */
 
 #ai-output {
   position: absolute;
@@ -129,17 +142,17 @@ button:hover {
   left: 12px;
   right: 12px;
   font-size: 12px;
-  opacity: 0.8;
+  opacity: 0.85;
   padding: 10px;
   border: 1px solid #2a3d66;
-  background: rgba(10, 15, 30, 0.5);
+  background: rgba(10, 15, 30, 0.6);
   border-radius: 8px;
   z-index: 10;
 }
 
-/* =========================
-   SYSTEM FEEL POLISH
-========================= */
+/* -------------------------
+   SAFETY / BOX MODEL FIX
+------------------------- */
 
 * {
   box-sizing: border-box;
