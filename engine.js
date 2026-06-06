@@ -1,55 +1,119 @@
 // =========================
-// SVEN SYSTEM ENGINE v5
-// STATE HARDENING IMPLEMENTED
-// SINGLE SOURCE OF TRUTH
+// SVEN SYSTEM ENGINE v7
+// STATE + INCIDENT + HARDENED CONTROL
 // =========================
 
 // 🟢 SINGLE SOURCE OF TRUTH
 let STATE = "OBSERVE";
 
+// 🚨 INCIDENT SYSTEM
+let INCIDENT_ACTIVE = false;
+let INCIDENT_REASON = "";
+
 // =========================
-// PUBLIC STATE CHANGE API
+// STATE CONTROL
 // =========================
 
 function setState(newState) {
+
+  // 🚨 BLOCK STATE IF INCIDENT ACTIVE
+  if (INCIDENT_ACTIVE) return;
+
   STATE = newState;
 
-  syncState();     // 🔒 enforce single truth everywhere
-  render();        // UI update
-  updateAI();      // AI update (text only for now)
+  syncState();
+  render();
+  updateAI();
 }
 
 // =========================
-// STATE SYNCHRONISATION LAYER
+// INCIDENT TRIGGER
+// =========================
+
+function triggerIncident(reason) {
+
+  INCIDENT_ACTIVE = true;
+  INCIDENT_REASON = reason;
+
+  enterEmergencyMode();
+}
+
+// =========================
+// INCIDENT RESOLVE
+// =========================
+
+function resolveIncident() {
+
+  INCIDENT_ACTIVE = false;
+  INCIDENT_REASON = "";
+
+  exitEmergencyMode();
+}
+
+// =========================
+// EMERGENCY MODE
+// =========================
+
+function enterEmergencyMode() {
+
+  const aiOutput = document.getElementById("ai-output");
+
+  if (aiOutput) {
+    aiOutput.innerText =
+      "🚨 INCIDENT ACTIVE: " + INCIDENT_REASON;
+  }
+
+  document.body.setAttribute("data-state", "INCIDENT");
+}
+
+// =========================
+// EXIT EMERGENCY MODE
+// =========================
+
+function exitEmergencyMode() {
+
+  syncState();
+  render();
+  updateAI();
+}
+
+// =========================
+// STATE → DOM SYNC (SINGLE SOURCE OF TRUTH)
 // =========================
 
 function syncState() {
-  // 🔒 ONLY PLACE THAT TOUCHES DOM STATE
   document.body.setAttribute("data-state", STATE);
 }
 
 // =========================
-// RENDER ENGINE (UI ONLY)
+// RENDER ENGINE
 // =========================
 
 function render() {
+
   const stateDisplay = document.getElementById("state-display");
+
   const sven = document.getElementById("sven");
   const chatty = document.getElementById("chatty");
   const network = document.getElementById("network");
 
   if (!stateDisplay || !sven || !chatty || !network) return;
 
-  // STATE DISPLAY (READ ONLY)
+  // INCIDENT OVERRIDE UI
+  if (INCIDENT_ACTIVE) {
+    stateDisplay.innerText = "STATE: INCIDENT MODE";
+    return;
+  }
+
   stateDisplay.innerText = "STATE: " + STATE;
 
-  // RESET BASE VISUALS
+  // RESET VISUALS
   sven.style.opacity = "1";
   chatty.style.opacity = "1";
   chatty.style.transform = "translateY(0px)";
   network.style.opacity = "0.2";
 
-  // MICRO INTERACTIONS (NO STATE OWNERSHIP HERE)
+  // STATE VISUALS
   if (STATE === "CONNECT") {
     chatty.style.transform = "translateY(-10px)";
     network.style.opacity = "0.6";
@@ -68,51 +132,58 @@ function render() {
 }
 
 // =========================
-// AI OUTPUT (READ ONLY STATE)
+// AI OUTPUT SYSTEM
 // =========================
 
 function updateAI() {
+
   const aiOutput = document.getElementById("ai-output");
+
   if (!aiOutput) return;
+
+  // 🚨 INCIDENT OVERRIDE
+  if (INCIDENT_ACTIVE) {
+    aiOutput.innerText =
+      "🚨 INCIDENT MODE ACTIVE: " + INCIDENT_REASON;
+    return;
+  }
 
   let text = "";
 
   switch (STATE) {
+
     case "OBSERVE":
-      text = "System im Beobachtungsmodus. Daten werden erfasst.";
+      text = "System im Beobachtungsmodus.";
       break;
 
     case "CONNECT":
-      text = "System verbindet aktive Knoten und Beziehungen.";
+      text = "System analysiert Verbindungen.";
       break;
 
     case "STRUCTURE":
-      text = "System analysiert und strukturiert Informationsmuster.";
+      text = "System strukturiert Daten.";
       break;
 
     case "REFLECT":
-      text = "System reduziert Aktivität und führt Selbstanalyse durch.";
+      text = "System führt Selbstanalyse durch.";
       break;
-
-    default:
-      text = "Unbekannter Systemzustand.";
   }
 
   aiOutput.innerText = text;
 }
 
 // =========================
-// INIT (BOOT SEQUENCE)
+// INIT
 // =========================
 
 function init() {
-  syncState();   // 🔒 enforce truth on load
+  syncState();
   render();
   updateAI();
 }
 
 // =========================
-// BOOT SYSTEM
+// BOOT
 // =========================
 
 init();
