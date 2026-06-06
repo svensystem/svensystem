@@ -1,5 +1,5 @@
 // =========================
-// SVEN SYSTEM ENGINE v1.0
+// SVEN SYSTEM ENGINE v3 (FIXED)
 // =========================
 
 let STATE = "OBSERVE";
@@ -10,8 +10,18 @@ let STATE = "OBSERVE";
 
 function setState(newState) {
   STATE = newState;
+
+  syncStateToDOM();   // 🔥 FIX: verbindet CSS
   render();
   updateAI();
+}
+
+// -------------------------
+// CRITICAL FIX: STATE → CSS LINK
+// -------------------------
+
+function syncStateToDOM() {
+  document.body.setAttribute("data-state", STATE);
 }
 
 // -------------------------
@@ -29,38 +39,24 @@ function render() {
 
   stateDisplay.innerText = "STATE: " + STATE;
 
-  // RESET
+  // BASE RESET
   sven.style.opacity = "1";
   chatty.style.opacity = "1";
   chatty.style.transform = "translateY(0px)";
   network.style.opacity = "0.2";
 
-  // -------------------------
-  // STATE LOGIC
-  // -------------------------
-
-  if (STATE === "OBSERVE") {
-    chatty.style.opacity = "0.6";
-    network.style.opacity = "0.3";
-  }
-
+  // OPTIONAL MICRO-FEEDBACK (CSS now handles main visuals)
   if (STATE === "CONNECT") {
     chatty.style.transform = "translateY(-10px)";
-    network.style.opacity = "0.7";
-  }
-
-  if (STATE === "STRUCTURE") {
-    network.style.opacity = "0.9";
   }
 
   if (STATE === "REFLECT") {
     sven.style.opacity = "0.6";
-    network.style.opacity = "0.15";
   }
 }
 
 // -------------------------
-// AI FEEDBACK (SIMPLIFIED)
+// AI OUTPUT
 // -------------------------
 
 function updateAI() {
@@ -71,19 +67,19 @@ function updateAI() {
   let text = "";
 
   if (STATE === "OBSERVE") {
-    text = "System beobachtet Umgebung. Sven ist im Wahrnehmungsmodus.";
+    text = "System im Beobachtungsmodus.";
   }
 
   if (STATE === "CONNECT") {
-    text = "Netzwerkaktivität steigt. Chatty reagiert auf Verbindungen.";
+    text = "Verbindungen werden aktiv aufgebaut.";
   }
 
   if (STATE === "STRUCTURE") {
-    text = "System ordnet Muster. Struktur wird stabilisiert.";
+    text = "System strukturiert Datenfluss.";
   }
 
   if (STATE === "REFLECT") {
-    text = "System reduziert Aktivität. Fokus auf innere Verarbeitung.";
+    text = "System reduziert Aktivität zur Analyse.";
   }
 
   aiOutput.innerText = text;
@@ -93,5 +89,6 @@ function updateAI() {
 // INIT
 // -------------------------
 
+syncStateToDOM(); // 🔥 FIX: initial sync
 render();
 updateAI();
