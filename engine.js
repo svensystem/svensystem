@@ -1,5 +1,6 @@
+
 // =========================
-// SVEN SYSTEM ENGINE v3 (FIXED)
+// SVEN SYSTEM ENGINE v4 (AI READY)
 // =========================
 
 let STATE = "OBSERVE";
@@ -11,13 +12,13 @@ let STATE = "OBSERVE";
 function setState(newState) {
   STATE = newState;
 
-  syncStateToDOM();   // 🔥 FIX: verbindet CSS
+  syncStateToDOM();
   render();
-  updateAI();
+  runAIFlow(); // 🔥 AI Pipeline startet bei jedem State Wechsel
 }
 
 // -------------------------
-// CRITICAL FIX: STATE → CSS LINK
+// STATE → CSS BINDING
 // -------------------------
 
 function syncStateToDOM() {
@@ -25,7 +26,7 @@ function syncStateToDOM() {
 }
 
 // -------------------------
-// RENDER ENGINE
+// RENDER ENGINE (VISUAL CONTROL)
 // -------------------------
 
 function render() {
@@ -39,48 +40,83 @@ function render() {
 
   stateDisplay.innerText = "STATE: " + STATE;
 
-  // BASE RESET
+  // RESET VISUALS
   sven.style.opacity = "1";
   chatty.style.opacity = "1";
   chatty.style.transform = "translateY(0px)";
   network.style.opacity = "0.2";
 
-  // OPTIONAL MICRO-FEEDBACK (CSS now handles main visuals)
+  // MICRO VISUAL STATE FEEDBACK
   if (STATE === "CONNECT") {
     chatty.style.transform = "translateY(-10px)";
   }
 
+  if (STATE === "STRUCTURE") {
+    sven.style.transform = "scale(1.05)";
+  }
+
   if (STATE === "REFLECT") {
     sven.style.opacity = "0.6";
+    chatty.style.opacity = "0.5";
   }
 }
 
 // -------------------------
-// AI OUTPUT
+// AI PIPELINE (ARCHITECTURE ONLY)
 // -------------------------
 
-function updateAI() {
+function runAIFlow() {
+
+  const prompt = buildPrompt(STATE);
+
+  const fakeResponse = simulateAI(prompt);
+
+  renderAIOutput(fakeResponse);
+}
+
+// -------------------------
+// PROMPT BUILDER (STATE → KI INPUT)
+// -------------------------
+
+function buildPrompt(state) {
+
+  if (state === "OBSERVE") {
+    return "Beschreibe das System im Beobachtungsmodus.";
+  }
+
+  if (state === "CONNECT") {
+    return "Analysiere aktive Verbindungen im System.";
+  }
+
+  if (state === "STRUCTURE") {
+    return "Erkenne Muster und strukturelle Ordnung im System.";
+  }
+
+  if (state === "REFLECT") {
+    return "Bewerte den aktuellen Systemzustand kritisch und reduzierend.";
+  }
+
+  return "Beschreibe Systemzustand.";
+}
+
+// -------------------------
+// AI HANDLER (SIMULATION – NO REAL API YET)
+// -------------------------
+
+function simulateAI(prompt) {
+
+  return "AI RESPONSE: " + prompt;
+}
+
+// -------------------------
+// OUTPUT RENDERER
+// -------------------------
+
+function renderAIOutput(text) {
+
   const aiOutput = document.getElementById("ai-output");
 
   if (!aiOutput) return;
-
-  let text = "";
-
-  if (STATE === "OBSERVE") {
-    text = "System im Beobachtungsmodus.";
-  }
-
-  if (STATE === "CONNECT") {
-    text = "Verbindungen werden aktiv aufgebaut.";
-  }
-
-  if (STATE === "STRUCTURE") {
-    text = "System strukturiert Datenfluss.";
-  }
-
-  if (STATE === "REFLECT") {
-    text = "System reduziert Aktivität zur Analyse.";
-  }
 
   aiOutput.innerText = text;
 }
@@ -89,6 +125,6 @@ function updateAI() {
 // INIT
 // -------------------------
 
-syncStateToDOM(); // 🔥 FIX: initial sync
+syncStateToDOM();
 render();
-updateAI();
+runAIFlow();
