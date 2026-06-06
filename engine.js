@@ -1,6 +1,6 @@
 // =========================
-// SVEN SYSTEM ENGINE v11
-// INCIDENT VISUALIZATION INTEGRATED
+// SVEN SYSTEM ENGINE v12
+// INCIDENT TEST BUTTON ADDED
 // =========================
 
 let STATE = "OBSERVE";
@@ -66,7 +66,6 @@ function resolveIncident() {
 function applyVisualState() {
 
   const body = document.body;
-  body.classList.remove("incident-mode");
 
   body.style.transition = "all 0.5s ease";
 
@@ -88,24 +87,44 @@ function applyVisualState() {
 }
 
 // =========================
-// INCIDENT VISUALIZATION (NEU)
+// INCIDENT VISUAL SYSTEM
 // =========================
 
 function applyIncidentVisual() {
 
-  const body = document.body;
   const stateDisplay = document.getElementById("state-display");
+  const body = document.body;
 
-  body.classList.add("incident-mode");
-
-  // VISUAL EMERGENCY STATE
-  body.style.filter = "grayscale(0.2) brightness(0.8) contrast(1.4)";
+  body.style.filter = "grayscale(0.3) brightness(0.7) contrast(1.5)";
 
   if (stateDisplay) {
     stateDisplay.innerText = "🚨 INCIDENT ACTIVE";
-    stateDisplay.style.color = "#ff3b3b";
-    stateDisplay.style.textShadow = "0 0 10px red";
+    stateDisplay.style.color = "red";
   }
+}
+
+// =========================
+// VISUAL TEST BUTTON (NEU)
+// =========================
+
+function addIncidentTestButton() {
+
+  const btn = document.createElement("button");
+
+  btn.innerText = "TRIGGER INCIDENT TEST";
+  btn.style.position = "absolute";
+  btn.style.top = "10px";
+  btn.style.right = "10px";
+  btn.style.zIndex = "999";
+  btn.style.padding = "10px";
+  btn.style.background = "red";
+  btn.style.color = "white";
+
+  btn.onclick = () => {
+    triggerIncident("MANUAL TEST INCIDENT");
+  };
+
+  document.body.appendChild(btn);
 }
 
 // =========================
@@ -134,12 +153,12 @@ function render() {
   network.style.opacity = "0.2";
 
   if (STATE === "CONNECT") {
-    chatty.style.transform = "translateY(-12px)";
+    chatty.style.transform = "translateY(-10px)";
     network.style.opacity = "0.6";
   }
 
   if (STATE === "STRUCTURE") {
-    sven.style.transform = "scale(1.08)";
+    sven.style.transform = "scale(1.05)";
     network.style.opacity = "0.75";
   }
 
@@ -192,7 +211,8 @@ function init() {
   syncState();
   render();
   updateAI();
-  applyVisualState();
+
+  addIncidentTestButton(); // 🔥 NEU: TEST BUTTON
 }
 
 init();
