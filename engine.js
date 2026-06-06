@@ -1,12 +1,10 @@
 // =========================
-// SVEN SYSTEM ENGINE v10
-// VISUAL CONTROL ROOM EVOLUTION
+// SVEN SYSTEM ENGINE v11
+// INCIDENT VISUALIZATION INTEGRATED
 // =========================
 
-// 🧠 SINGLE SOURCE OF TRUTH
 let STATE = "OBSERVE";
 
-// 🚨 INCIDENT SYSTEM
 let INCIDENT_ACTIVE = false;
 let INCIDENT_REASON = "";
 
@@ -23,7 +21,7 @@ function setState(newState) {
   syncState();
   render();
   updateAI();
-  applyVisualState(); // 🔥 VISUAL LAYER
+  applyVisualState();
 }
 
 // =========================
@@ -35,15 +33,42 @@ function syncState() {
 }
 
 // =========================
-// VISUAL STATE LAYER (NEU)
+// INCIDENT SYSTEM
+// =========================
+
+function triggerIncident(reason) {
+
+  INCIDENT_ACTIVE = true;
+  INCIDENT_REASON = reason;
+
+  document.body.setAttribute("data-state", "INCIDENT");
+
+  render();
+  updateAI();
+  applyIncidentVisual();
+}
+
+function resolveIncident() {
+
+  INCIDENT_ACTIVE = false;
+  INCIDENT_REASON = "";
+
+  syncState();
+  render();
+  updateAI();
+  applyVisualState();
+}
+
+// =========================
+// VISUAL STATE SYSTEM
 // =========================
 
 function applyVisualState() {
 
   const body = document.body;
+  body.classList.remove("incident-mode");
 
-  // RESET VISUAL FLAGS
-  body.style.transition = "all 0.6s ease";
+  body.style.transition = "all 0.5s ease";
 
   if (STATE === "OBSERVE") {
     body.style.filter = "brightness(0.9) saturate(0.8)";
@@ -63,29 +88,24 @@ function applyVisualState() {
 }
 
 // =========================
-// INCIDENT SYSTEM
+// INCIDENT VISUALIZATION (NEU)
 // =========================
 
-function triggerIncident(reason) {
+function applyIncidentVisual() {
 
-  INCIDENT_ACTIVE = true;
-  INCIDENT_REASON = reason;
+  const body = document.body;
+  const stateDisplay = document.getElementById("state-display");
 
-  document.body.setAttribute("data-state", "INCIDENT");
+  body.classList.add("incident-mode");
 
-  render();
-  updateAI();
-}
+  // VISUAL EMERGENCY STATE
+  body.style.filter = "grayscale(0.2) brightness(0.8) contrast(1.4)";
 
-function resolveIncident() {
-
-  INCIDENT_ACTIVE = false;
-  INCIDENT_REASON = "";
-
-  syncState();
-  render();
-  updateAI();
-  applyVisualState();
+  if (stateDisplay) {
+    stateDisplay.innerText = "🚨 INCIDENT ACTIVE";
+    stateDisplay.style.color = "#ff3b3b";
+    stateDisplay.style.textShadow = "0 0 10px red";
+  }
 }
 
 // =========================
@@ -102,19 +122,17 @@ function render() {
   if (!stateDisplay || !sven || !chatty || !network) return;
 
   if (INCIDENT_ACTIVE) {
-    stateDisplay.innerText = "STATE: INCIDENT MODE";
+    stateDisplay.innerText = "🚨 INCIDENT MODE: " + INCIDENT_REASON;
     return;
   }
 
   stateDisplay.innerText = "STATE: " + STATE;
 
-  // RESET
   sven.style.opacity = "1";
   chatty.style.opacity = "1";
   chatty.style.transform = "translateY(0px)";
   network.style.opacity = "0.2";
 
-  // STATE VISUAL MICRO BEHAVIOR
   if (STATE === "CONNECT") {
     chatty.style.transform = "translateY(-12px)";
     network.style.opacity = "0.6";
@@ -153,15 +171,15 @@ function updateAI() {
       break;
 
     case "CONNECT":
-      aiOutput.innerText = "System verbindet aktive Strukturen.";
+      aiOutput.innerText = "System verbindet Strukturen.";
       break;
 
     case "STRUCTURE":
-      aiOutput.innerText = "System analysiert Ordnungsmuster.";
+      aiOutput.innerText = "System organisiert Datenfluss.";
       break;
 
     case "REFLECT":
-      aiOutput.innerText = "System reduziert und analysiert intern.";
+      aiOutput.innerText = "System analysiert intern.";
       break;
   }
 }
@@ -174,7 +192,7 @@ function init() {
   syncState();
   render();
   updateAI();
-  applyVisualState(); // 🔥 INITIAL VISUAL SYNC
+  applyVisualState();
 }
 
 init();
