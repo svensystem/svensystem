@@ -1,6 +1,6 @@
 /* =========================
    SVEN SYSTEM CONTROL ROOM
-   VISUAL INTENSITY v4 (STRONG STATE DIFFERENCE)
+   CONTRAST FIX v5 (STABLE + READABLE)
 ========================= */
 
 body {
@@ -8,11 +8,14 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
   overflow: hidden;
-  transition: background 0.6s ease, filter 0.6s ease;
+
+  /* 🔒 FIX: stabiler dunkler Grund */
+  background: #05070d;
+  color: #d6e2ff;
 }
 
 /* =========================
-   BASE LAYER
+   BACKGROUND LAYERS
 ========================= */
 
 #network,
@@ -24,36 +27,25 @@ body {
   left: 0;
 }
 
-/* =========================
-   STRONG STATE BACKGROUNDS
-========================= */
-
-/* OBSERVE = neutral dark */
-body[data-state="OBSERVE"] {
-  background: radial-gradient(circle at center, #05070f, #02030a);
-  filter: saturate(0.8);
+/* COSMOS (stabil dunkel) */
+#cosmos {
+  background: radial-gradient(circle at center, #070b14, #02030a);
+  opacity: 1;
+  z-index: 0;
 }
 
-/* CONNECT = bright / energetic */
-body[data-state="CONNECT"] {
-  background: radial-gradient(circle at center, #0a2a4a, #03060c);
-  filter: saturate(1.6) brightness(1.2);
-}
-
-/* STRUCTURE = sharp / high contrast */
-body[data-state="STRUCTURE"] {
-  background: radial-gradient(circle at center, #0c1a2a, #010208);
-  filter: contrast(1.4) saturate(1.1);
-}
-
-/* REFLECT = dark / collapsed system */
-body[data-state="REFLECT"] {
-  background: radial-gradient(circle at center, #02040a, #000000);
-  filter: grayscale(1) brightness(0.7);
+/* NETWORK (dezent, nicht überhellend) */
+#network {
+  background-image:
+    linear-gradient(rgba(80,120,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80,120,255,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.25;
+  z-index: 1;
 }
 
 /* =========================
-   TOP BAR
+   TOPBAR
 ========================= */
 
 #topbar {
@@ -62,8 +54,10 @@ body[data-state="REFLECT"] {
   padding: 12px;
   position: relative;
   z-index: 10;
-  background: rgba(10, 15, 30, 0.7);
+
+  background: rgba(10, 15, 25, 0.85);
   border-bottom: 1px solid rgba(120,160,255,0.2);
+  backdrop-filter: blur(8px);
 }
 
 button {
@@ -73,43 +67,25 @@ button {
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 button:hover {
-  transform: scale(1.08);
+  background: #1f2a44;
+  transform: scale(1.05);
 }
 
 /* =========================
-   STATE DISPLAY (STRONG FEEDBACK)
+   STATE DISPLAY (klar lesbar)
 ========================= */
 
 #state-display {
   padding: 10px;
   font-weight: bold;
-  letter-spacing: 2px;
-  transition: all 0.4s ease;
-}
-
-/* STATE COLORS (VERY DISTINCT) */
-
-body[data-state="OBSERVE"] #state-display {
+  letter-spacing: 1px;
   color: #9fb4ff;
-}
-
-body[data-state="CONNECT"] #state-display {
-  color: #00d4ff;
-  text-shadow: 0 0 10px rgba(0,212,255,0.6);
-}
-
-body[data-state="STRUCTURE"] #state-display {
-  color: #7CFF6B;
-  text-shadow: 0 0 10px rgba(124,255,107,0.6);
-}
-
-body[data-state="REFLECT"] #state-display {
-  color: #b38cff;
-  text-shadow: 0 0 10px rgba(179,140,255,0.6);
+  z-index: 10;
+  position: relative;
 }
 
 /* =========================
@@ -127,53 +103,37 @@ body[data-state="REFLECT"] #state-display {
 }
 
 /* =========================
-   SVEN / CHATTY STRONG DIFFERENCE
+   SVEN / CHATTY (KONTRAST FIX)
 ========================= */
 
 #sven,
 #chatty {
-  padding: 20px 26px;
+  padding: 18px 22px;
   border-radius: 14px;
-  transition: all 0.4s ease;
+  background: rgba(15, 20, 35, 0.7);
+  border: 1px solid rgba(120,160,255,0.25);
+  backdrop-filter: blur(10px);
+
+  color: #e6eeff;
+  font-weight: 600;
+
+  transition: all 0.3s ease;
 }
 
-/* OBSERVE = balanced */
-body[data-state="OBSERVE"] #sven,
-body[data-state="OBSERVE"] #chatty {
-  opacity: 0.85;
-  transform: scale(1);
+/* SVEN stärker sichtbar */
+#sven {
+  border-color: rgba(120,200,255,0.5);
+  box-shadow: 0 0 15px rgba(80,160,255,0.15);
 }
 
-/* CONNECT = dynamic movement */
-body[data-state="CONNECT"] #chatty {
-  transform: translateY(-15px) scale(1.1);
-  box-shadow: 0 0 30px rgba(0,212,255,0.4);
-}
-
-body[data-state="CONNECT"] #sven {
-  transform: scale(0.95);
-  opacity: 0.7;
-}
-
-/* STRUCTURE = stabilized system */
-body[data-state="STRUCTURE"] #sven {
-  transform: scale(1.15);
-  box-shadow: 0 0 25px rgba(124,255,107,0.4);
-}
-
-/* REFLECT = system collapse feel */
-body[data-state="REFLECT"] #chatty {
-  opacity: 0.4;
-  transform: scale(0.9);
-}
-
-body[data-state="REFLECT"] #sven {
-  opacity: 0.6;
-  filter: blur(0.5px);
+/* CHATTY leicht anders */
+#chatty {
+  border-color: rgba(180,120,255,0.4);
+  box-shadow: 0 0 15px rgba(180,120,255,0.12);
 }
 
 /* =========================
-   CUP ANCHOR
+   CUP
 ========================= */
 
 #cup {
@@ -181,40 +141,18 @@ body[data-state="REFLECT"] #sven {
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 12px 16px;
-  border-radius: 10px;
+
+  padding: 10px 14px;
+  background: rgba(10, 15, 25, 0.7);
   border: 1px solid rgba(120,160,255,0.25);
-  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+
+  color: #cfe0ff;
+  z-index: 10;
 }
 
 /* =========================
-   NETWORK INTENSITY BOOST
-========================= */
-
-#network {
-  opacity: 0.2;
-  background-image:
-    linear-gradient(rgba(80,120,255,0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(80,120,255,0.1) 1px, transparent 1px);
-}
-
-/* CONNECT = active network */
-body[data-state="CONNECT"] #network {
-  opacity: 0.6;
-}
-
-/* STRUCTURE = structured grid */
-body[data-state="STRUCTURE"] #network {
-  opacity: 0.75;
-}
-
-/* REFLECT = weak system */
-body[data-state="REFLECT"] #network {
-  opacity: 0.1;
-}
-
-/* =========================
-   AI OUTPUT
+   AI OUTPUT (klar getrennt)
 ========================= */
 
 #ai-output {
@@ -222,15 +160,20 @@ body[data-state="REFLECT"] #network {
   bottom: 16px;
   left: 16px;
   right: 16px;
+
   padding: 14px;
   font-size: 12px;
-  border-radius: 10px;
-  background: rgba(10,15,30,0.7);
+
+  background: rgba(10, 15, 25, 0.85);
   border: 1px solid rgba(120,160,255,0.25);
+  border-radius: 10px;
+
+  color: #d6e2ff;
+  z-index: 20;
 }
 
 /* =========================
-   GLOBAL FIX
+   SAFE BASE
 ========================= */
 
 * {
