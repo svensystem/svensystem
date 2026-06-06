@@ -1,6 +1,6 @@
 /* =========================
    SVEN SYSTEM CONTROL ROOM
-   CONTRAST FIX v5 (STABLE + READABLE)
+   EXTREME STATE DIFFERENCE v6
 ========================= */
 
 body {
@@ -8,14 +8,11 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
   overflow: hidden;
-
-  /* 🔒 FIX: stabiler dunkler Grund */
-  background: #05070d;
-  color: #d6e2ff;
+  transition: background 0.4s ease, filter 0.4s ease;
 }
 
 /* =========================
-   BACKGROUND LAYERS
+   BASE RESET
 ========================= */
 
 #network,
@@ -23,29 +20,38 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-}
-
-/* COSMOS (stabil dunkel) */
-#cosmos {
-  background: radial-gradient(circle at center, #070b14, #02030a);
-  opacity: 1;
-  z-index: 0;
-}
-
-/* NETWORK (dezent, nicht überhellend) */
-#network {
-  background-image:
-    linear-gradient(rgba(80,120,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(80,120,255,0.05) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.25;
-  z-index: 1;
 }
 
 /* =========================
-   TOPBAR
+   EXTREME STATE SYSTEM
+========================= */
+
+/* 🟢 OBSERVE = cold deep blue */
+body[data-state="OBSERVE"] {
+  background: #02040a;
+  filter: saturate(0.8) brightness(0.7);
+}
+
+/* 🔵 CONNECT = bright cyan energy */
+body[data-state="CONNECT"] {
+  background: #001a2e;
+  filter: saturate(2) brightness(1.3) hue-rotate(10deg);
+}
+
+/* 🟣 STRUCTURE = sharp green system mode */
+body[data-state="STRUCTURE"] {
+  background: #00140f;
+  filter: saturate(1.5) brightness(1.1) hue-rotate(80deg);
+}
+
+/* 🔴 REFLECT = red warning / shutdown feel */
+body[data-state="REFLECT"] {
+  background: #1a0005;
+  filter: saturate(0.8) brightness(0.6) hue-rotate(-20deg);
+}
+
+/* =========================
+   TOP BAR (HIGH CONTRAST)
 ========================= */
 
 #topbar {
@@ -54,82 +60,114 @@ body {
   padding: 12px;
   position: relative;
   z-index: 10;
-
-  background: rgba(10, 15, 25, 0.85);
-  border-bottom: 1px solid rgba(120,160,255,0.2);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.7);
+  border-bottom: 2px solid rgba(255,255,255,0.1);
 }
 
 button {
-  background: #111827;
-  border: 1px solid rgba(120,160,255,0.25);
-  color: #d6e2ff;
-  padding: 8px 12px;
-  border-radius: 8px;
+  background: black;
+  border: 1px solid white;
+  color: white;
+  padding: 10px 14px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: 0.2s;
 }
 
 button:hover {
-  background: #1f2a44;
-  transform: scale(1.05);
+  background: white;
+  color: black;
 }
 
 /* =========================
-   STATE DISPLAY (klar lesbar)
+   STATE LABEL (VERY STRONG)
 ========================= */
 
 #state-display {
   padding: 10px;
   font-weight: bold;
-  letter-spacing: 1px;
-  color: #9fb4ff;
-  z-index: 10;
-  position: relative;
+  letter-spacing: 2px;
+}
+
+/* STATE COLORS EXTREME */
+
+body[data-state="OBSERVE"] #state-display {
+  color: #7aa2ff;
+}
+
+body[data-state="CONNECT"] #state-display {
+  color: #00e5ff;
+  text-shadow: 0 0 15px #00e5ff;
+}
+
+body[data-state="STRUCTURE"] #state-display {
+  color: #00ff88;
+  text-shadow: 0 0 15px #00ff88;
+}
+
+body[data-state="REFLECT"] #state-display {
+  color: #ff0033;
+  text-shadow: 0 0 20px #ff0033;
 }
 
 /* =========================
-   SCENE
-========================= */
-
-#scene {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 65vh;
-  gap: 80px;
-  position: relative;
-  z-index: 5;
-}
-
-/* =========================
-   SVEN / CHATTY (KONTRAST FIX)
+   SVEN / CHATTY EXTREME DIFFERENCE
 ========================= */
 
 #sven,
 #chatty {
-  padding: 18px 22px;
-  border-radius: 14px;
-  background: rgba(15, 20, 35, 0.7);
-  border: 1px solid rgba(120,160,255,0.25);
-  backdrop-filter: blur(10px);
-
-  color: #e6eeff;
-  font-weight: 600;
-
+  padding: 22px 28px;
+  border-radius: 12px;
+  font-weight: bold;
   transition: all 0.3s ease;
 }
 
-/* SVEN stärker sichtbar */
-#sven {
-  border-color: rgba(120,200,255,0.5);
-  box-shadow: 0 0 15px rgba(80,160,255,0.15);
+/* OBSERVE */
+body[data-state="OBSERVE"] #sven,
+body[data-state="OBSERVE"] #chatty {
+  opacity: 0.8;
 }
 
-/* CHATTY leicht anders */
-#chatty {
-  border-color: rgba(180,120,255,0.4);
-  box-shadow: 0 0 15px rgba(180,120,255,0.12);
+/* CONNECT = motion */
+body[data-state="CONNECT"] #chatty {
+  transform: translateY(-20px) scale(1.15);
+  box-shadow: 0 0 25px #00e5ff;
+}
+
+/* STRUCTURE = stabilisiert + grün */
+body[data-state="STRUCTURE"] #sven {
+  transform: scale(1.2);
+  box-shadow: 0 0 25px #00ff88;
+}
+
+/* REFLECT = reduziert + rot */
+body[data-state="REFLECT"] #chatty {
+  opacity: 0.3;
+  transform: scale(0.85);
+  filter: blur(1px);
+}
+
+/* =========================
+   NETWORK (STARK DIFFERENZIERT)
+========================= */
+
+#network {
+  opacity: 0.15;
+  background-size: 50px 50px;
+}
+
+/* CONNECT = HIGH ENERGY */
+body[data-state="CONNECT"] #network {
+  opacity: 0.7;
+}
+
+/* STRUCTURE = GRID FOCUS */
+body[data-state="STRUCTURE"] #network {
+  opacity: 0.85;
+}
+
+/* REFLECT = almost off */
+body[data-state="REFLECT"] #network {
+  opacity: 0.1;
 }
 
 /* =========================
@@ -141,18 +179,14 @@ button:hover {
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-
   padding: 10px 14px;
-  background: rgba(10, 15, 25, 0.7);
-  border: 1px solid rgba(120,160,255,0.25);
-  border-radius: 10px;
-
-  color: #cfe0ff;
-  z-index: 10;
+  border: 1px solid white;
+  background: black;
+  color: white;
 }
 
 /* =========================
-   AI OUTPUT (klar getrennt)
+   AI OUTPUT
 ========================= */
 
 #ai-output {
@@ -160,20 +194,15 @@ button:hover {
   bottom: 16px;
   left: 16px;
   right: 16px;
-
   padding: 14px;
   font-size: 12px;
-
-  background: rgba(10, 15, 25, 0.85);
-  border: 1px solid rgba(120,160,255,0.25);
-  border-radius: 10px;
-
-  color: #d6e2ff;
-  z-index: 20;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid white;
+  color: white;
 }
 
 /* =========================
-   SAFE BASE
+   GLOBAL
 ========================= */
 
 * {
