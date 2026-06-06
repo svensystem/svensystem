@@ -1,9 +1,9 @@
 // =========================
-// SVEN SYSTEM ENGINE v9
-// UNIFIED STATE CORE + CORE INTEGRITY LOOP
+// SVEN SYSTEM ENGINE v10
+// VISUAL CONTROL ROOM EVOLUTION
 // =========================
 
-// 🧠 UNIFIED STATE CORE (Single Source of Truth)
+// 🧠 SINGLE SOURCE OF TRUTH
 let STATE = "OBSERVE";
 
 // 🚨 INCIDENT SYSTEM
@@ -20,17 +20,46 @@ function setState(newState) {
 
   STATE = newState;
 
-  syncCore();
+  syncState();
   render();
   updateAI();
+  applyVisualState(); // 🔥 VISUAL LAYER
 }
 
 // =========================
-// UNIFIED STATE CORE SYNC
+// CORE SYNC
 // =========================
 
-function syncCore() {
+function syncState() {
   document.body.setAttribute("data-state", STATE);
+}
+
+// =========================
+// VISUAL STATE LAYER (NEU)
+// =========================
+
+function applyVisualState() {
+
+  const body = document.body;
+
+  // RESET VISUAL FLAGS
+  body.style.transition = "all 0.6s ease";
+
+  if (STATE === "OBSERVE") {
+    body.style.filter = "brightness(0.9) saturate(0.8)";
+  }
+
+  if (STATE === "CONNECT") {
+    body.style.filter = "brightness(1.2) saturate(1.6)";
+  }
+
+  if (STATE === "STRUCTURE") {
+    body.style.filter = "contrast(1.3) saturate(1.1)";
+  }
+
+  if (STATE === "REFLECT") {
+    body.style.filter = "brightness(0.7) grayscale(0.8)";
+  }
 }
 
 // =========================
@@ -53,40 +82,10 @@ function resolveIncident() {
   INCIDENT_ACTIVE = false;
   INCIDENT_REASON = "";
 
-  syncCore();
+  syncState();
   render();
   updateAI();
-}
-
-// =========================
-// CORE INTEGRITY LOOP (NEU)
-// =========================
-
-function coreIntegrityLoop() {
-
-  // 🔍 1. STATE CONSISTENCY CHECK
-  const domState = document.body.getAttribute("data-state");
-
-  if (!INCIDENT_ACTIVE && domState !== STATE) {
-    console.warn("[CORE LOOP] STATE DESYNC detected → fixing");
-    syncCore();
-  }
-
-  // 🔍 2. INCIDENT VALIDATION
-  if (INCIDENT_ACTIVE && STATE !== "OBSERVE") {
-    console.warn("[CORE LOOP] Incident active but STATE changed → enforcing lock");
-    STATE = "OBSERVE";
-    syncCore();
-  }
-
-  // 🔍 3. BASIC SYSTEM HEALTH CHECK
-  const required = ["state-display", "sven", "chatty", "network", "ai-output"];
-
-  for (const id of required) {
-    if (!document.getElementById(id)) {
-      console.error("[CORE LOOP] Missing element:", id);
-    }
-  }
+  applyVisualState();
 }
 
 // =========================
@@ -115,13 +114,14 @@ function render() {
   chatty.style.transform = "translateY(0px)";
   network.style.opacity = "0.2";
 
+  // STATE VISUAL MICRO BEHAVIOR
   if (STATE === "CONNECT") {
-    chatty.style.transform = "translateY(-10px)";
+    chatty.style.transform = "translateY(-12px)";
     network.style.opacity = "0.6";
   }
 
   if (STATE === "STRUCTURE") {
-    sven.style.transform = "scale(1.05)";
+    sven.style.transform = "scale(1.08)";
     network.style.opacity = "0.75";
   }
 
@@ -139,7 +139,6 @@ function render() {
 function updateAI() {
 
   const aiOutput = document.getElementById("ai-output");
-
   if (!aiOutput) return;
 
   if (INCIDENT_ACTIVE) {
@@ -150,35 +149,32 @@ function updateAI() {
   switch (STATE) {
 
     case "OBSERVE":
-      aiOutput.innerText = "System beobachtet Umgebung.";
+      aiOutput.innerText = "System beobachtet stabil.";
       break;
 
     case "CONNECT":
-      aiOutput.innerText = "System analysiert Verbindungen.";
+      aiOutput.innerText = "System verbindet aktive Strukturen.";
       break;
 
     case "STRUCTURE":
-      aiOutput.innerText = "System strukturiert Daten.";
+      aiOutput.innerText = "System analysiert Ordnungsmuster.";
       break;
 
     case "REFLECT":
-      aiOutput.innerText = "System führt Selbstanalyse durch.";
+      aiOutput.innerText = "System reduziert und analysiert intern.";
       break;
   }
 }
 
 // =========================
-// INIT + CORE LOOP START
+// INIT
 // =========================
 
 function init() {
-  syncCore();
+  syncState();
   render();
   updateAI();
-
-  // 🧠 CORE INTEGRITY LOOP (1x pro Sekunde)
-  setInterval(coreIntegrityLoop, 1000);
+  applyVisualState(); // 🔥 INITIAL VISUAL SYNC
 }
 
-// BOOT SYSTEM
 init();
